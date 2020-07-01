@@ -2,6 +2,7 @@ const express = require('express');
 const ProdcutItem = require('../models/ProductItem');
 const lotusItems = require('./LotusProfessional');
 const skeyndorItems = require('./Skeyndor');
+const lorelItems = require('./LorelProfessional');
 
 const router = express.Router();
 
@@ -12,26 +13,30 @@ router.get('/:id',(req,res)=>{
 	let offset = parseInt(req.query.offset);
 	let start = parseInt(req.query.start);
 	if(id == 'Skeyndor'){
-		getSubCategories(start,offset).then((items)=>{
+		getSubCategories(start,offset,skeyndorItems).then((items)=>{
 			res.json(items);
 		})
 	}else if(id == 'Lotus Professional'){
-		getAllItems(start,offset).then((items)=>{
+		getAllItems(start,offset,lotusItems).then((items)=>{
+			res.json(items);
+		})
+	}else {
+		getAllItems(start,offset,lorelItems).then((items)=>{
 			res.json(items);
 		})
 	}
 })
 
-async function getSubCategories(start,offset) {
+async function getSubCategories(start,offset,mainBrandItems) {
 	return new Promise(async (resolve,reject)=>{
 		let items = [];
-		for(let i=start;i<start+offset && i < skeyndorItems.length;i++){
+		for(let i=start;i<start+offset && i < mainBrandItems.length;i++){
 			let item = {
-				subCategory:skeyndorItems[i].brandName,
+				subCategory:mainBrandItems[i].brandName,
 				items:[]
 			}
-			for(let j=0;j<skeyndorItems[i].items.length;j++){
-				let curr = skeyndorItems[i].items[j];
+			for(let j=0;j<mainBrandItems[i].items.length;j++){
+				let curr = mainBrandItems[i].items[j];
 				let subItem = await ProdcutItem.findOne({_id:curr});
 				item.items.push(subItem);
 			}
@@ -41,11 +46,11 @@ async function getSubCategories(start,offset) {
 	})
 }
 
-async function getAllItems(start,offset) {
+async function getAllItems(start,offset,mainBrandItems) {
 	return new Promise(async (resolve,reject)=>{
 		let items = [];
-		for(let i=start;i<start+offset && i < lotusItems.length;i++){
-			let item = await ProdcutItem.findOne({_id:lotusItems[i]});
+		for(let i=start;i<start+offset && i < mainBrandItems.length;i++){
+			let item = await ProdcutItem.findOne({_id:mainBrandItems[i]});
 			items.push(item);
 		}
 		 resolve(items);

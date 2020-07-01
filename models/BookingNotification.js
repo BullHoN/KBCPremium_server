@@ -11,6 +11,10 @@ const notificationSchema = mongoose.Schema({
 	}],
 	bookingTime:String,
 	bookingDate:String,
+	completed:{
+		type:Boolean,
+		default:false
+	},
 	customer_phoneNo:String,
 },{ timestamps: true });
 

@@ -37,17 +37,12 @@ admin.initializeApp({
 
 // const fs = require('fs');
 // const ProductItem = require('./models/ProductItem');
-// let items = [
-// 			"5ee21e175afff7452cc8ffb7",
-// 			"5ee21e175afff7452cc8ffb6",
-// 			"5ee21e175afff7452cc8ffb9",
-// 			"5ee21e175afff7452cc8ffb8"			
-// 		];
-// items.forEach((item)=>{
-// 	ProductItem.findOne({_id:item}).then((product)=>{
-// 		console.log(product.name)
+// ProductItem.find({}).then((products)=>{
+// 	products.forEach((product)=>{
+// 		product.imageUrl =  product.imageUrl.replace("192.168.225.20","18.188.149.40");
+// 		product.save();
 // 	})
-// })		
+// })
 
 // fs.readFile('imp.txt','utf8',(err,file)=>{
 // 	products = file.split(',');
@@ -84,6 +79,7 @@ app.use('/payment',require('./checkout/makeOrder'))
 app.use('/admin',require('./admin/getOrders'))
 app.use('/bookingItem',require('./bookingsRoutes/getBookingItem'))
 app.use('/bookseat',require('./bookingsRoutes/bookSeat'))
+app.use('/admin',require('./admin/getAppointments'))
 
 
 app.listen(5000,()=>{
