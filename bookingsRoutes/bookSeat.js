@@ -48,7 +48,6 @@ router.post('/',(req,res)=>{
 		saveNotification(req.body);			
 		res.json({status:true,reason:"Time is Available"});
 	}
-	console.log(seats)
 });
 
 function saveUserDetails(data) {
