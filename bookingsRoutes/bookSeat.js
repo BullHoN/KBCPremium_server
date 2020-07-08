@@ -58,24 +58,24 @@ function saveUserDetails(data) {
 	})
 }
 
-function saveNotification(data) {
-	console.log('new booking');
-}
-
 // function saveNotification(data) {
-// 	const notification = new BookingNotification({
-// 		amount:data.total,
-// 		fcmId:data.fcm_id,
-// 		orderId:data.orderId,
-// 		orderItems:data.orderItems,
-// 		bookingTime:data.selectedTime,
-// 		bookingDate:data.selectedDate,
-// 		customer_phoneNo:data.phNumber
-// 	}).save().then(()=>{
-// 		console.log('new booking')
-// 		sendNotificationToAdmin()
-// 	})
+// 	console.log('new booking');
 // }
+
+function saveNotification(data) {
+	const notification = new BookingNotification({
+		amount:data.total,
+		fcmId:data.fcm_id,
+		orderId:data.orderId,
+		orderItems:data.orderItems,
+		bookingTime:data.selectedTime,
+		bookingDate:data.selectedDate,
+		customer_phoneNo:data.phNumber
+	}).save().then(()=>{
+		console.log('new booking')
+		sendNotificationToAdmin()
+	})
+}
 
 // sendNotificationToAdmin()
 

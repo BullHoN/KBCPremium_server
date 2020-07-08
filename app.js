@@ -79,6 +79,8 @@ app.use('/payment',require('./checkout/makeOrder'))
 app.use('/admin',require('./admin/getOrders'))
 app.use('/bookingItem',require('./bookingsRoutes/getBookingItem'))
 app.use('/bookseat',require('./bookingsRoutes/bookSeat'))
+app.use('/updateBooking',require('./bookingsRoutes/updateBookingItem'))
+app.use('/updateOrder',require('./checkout/updateOrder'))
 app.use('/admin',require('./admin/getAppointments'))
 
 
