@@ -82,6 +82,7 @@ app.use('/bookseat',require('./bookingsRoutes/bookSeat'))
 app.use('/updateBooking',require('./bookingsRoutes/updateBookingItem'))
 app.use('/updateOrder',require('./checkout/updateOrder'))
 app.use('/admin',require('./admin/getAppointments'))
+app.use('/otp',require('./authRoutes/optverification'))
 
 
 app.listen(5000,()=>{

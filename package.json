@@ -12,6 +12,8 @@
     "cors": "^2.8.5",
     "express": "^4.17.1",
     "firebase-admin": "^8.12.1",
-    "mongoose": "^5.9.18"
+    "mongoose": "^5.9.18",
+    "shortid": "^2.2.15",
+    "unirest": "^0.6.0"
   }
 }
