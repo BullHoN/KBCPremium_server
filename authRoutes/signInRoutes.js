@@ -12,14 +12,15 @@ router.post('/signIn',(req,res)=>{
 	}
 
 	let phoneNo = req.body.phoneNo;
+	let otp = generateOtp()
+	responseData.otp = otp;
+
 	User.findOne({phoneNo:phoneNo}).then((user)=>{
 		if(user){
 			responseData.accountExists = true;
 			responseData.accountData = user;
 			res.json(responseData);
 		}else {
-			let otp = generateOtp()
-			responseData.otp = otp;
 			console.log('send otp',otp)
 			sendOtp(phoneNo,otp)
 			res.json(responseData);

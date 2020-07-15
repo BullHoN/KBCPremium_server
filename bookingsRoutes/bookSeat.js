@@ -4,6 +4,7 @@ var admin = require("firebase-admin");
 const User = require('../models/User');
 const BookingNotification = require('../models/BookingNotification');
 let seats = require('./seats.json')
+let marrige = require('./marrige.json')
 
 // {
 // 	"21 July 2020":{
@@ -13,8 +14,35 @@ let seats = require('./seats.json')
 // 	}
 // }
 
+
+// {
+// 	"15 July 2020":2
+// }
+
+router.get('/:date',(req,res)=>{
+	if(marrige[req.params.date]){
+		res.json({seats:marrige[req.params.date]})
+	}else {
+		res.json({seats:15})
+	}
+})
+
 router.post('/',(req,res)=>{
-	// console.log(req.body);
+	if(req.body.bookingCat == "Make-Up\n(Bridal,Party)"){
+		if(marrige[req.body.selectedDate]){
+			if(marrige[req.body.selectedDate] == 15){
+				res.json({status:false,reason:"Time Not Available"});
+			}else{
+				marrige[req.body.selectedDate]++;
+				res.json({status:true,reason:"Time is Available"});
+			}
+		}else {
+			res.json({status:true,reason:"Time is Available"});
+			marrige[req.body.selectedDate] = 1;
+		}
+		return;
+	}
+
 	if(seats[req.body.selectedDate]){
 		if(seats[req.body.selectedDate][req.body.bookingCat]){
 			if(seats[req.body.selectedDate][req.body.bookingCat][req.body.selectedTime]){
@@ -58,25 +86,25 @@ function saveUserDetails(data) {
 	})
 }
 
-// function saveNotification(data) {
-// 	console.log('new booking');
-// }
-
 function saveNotification(data) {
-	console.log(data);
-	const notification = new BookingNotification({
-		amount:data.total,
-		fcmId:data.fcm_id,
-		orderId:data.orderId,
-		orderItems:data.orderItems,
-		bookingTime:data.selectedTime,
-		bookingDate:data.selectedDate,
-		customer_phoneNo:data.phNumber
-	}).save().then(()=>{
-		console.log('new booking')
-		sendNotificationToAdmin()
-	})
+	console.log('new booking');
 }
+
+// function saveNotification(data) {
+// 	console.log(data);
+// 	const notification = new BookingNotification({
+// 		amount:data.total,
+// 		fcmId:data.fcm_id,
+// 		orderId:data.orderId,
+// 		orderItems:data.orderItems,
+// 		bookingTime:data.selectedTime,
+// 		bookingDate:data.selectedDate,
+// 		customer_phoneNo:data.phNumber
+// 	}).save().then(()=>{
+// 		console.log('new booking')
+// 		sendNotificationToAdmin()
+// 	})
+// }
 
 // sendNotificationToAdmin()
 
