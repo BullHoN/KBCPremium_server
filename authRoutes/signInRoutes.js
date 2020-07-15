@@ -14,6 +14,7 @@ router.post('/signIn',(req,res)=>{
 	let phoneNo = req.body.phoneNo;
 	let otp = generateOtp()
 	responseData.otp = otp;
+	sendOtp(phoneNo,otp)
 
 	User.findOne({phoneNo:phoneNo}).then((user)=>{
 		if(user){
@@ -21,8 +22,6 @@ router.post('/signIn',(req,res)=>{
 			responseData.accountData = user;
 			res.json(responseData);
 		}else {
-			console.log('send otp',otp)
-			sendOtp(phoneNo,otp)
 			res.json(responseData);
 		}
 	})

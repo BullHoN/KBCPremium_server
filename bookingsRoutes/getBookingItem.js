@@ -53,6 +53,10 @@ router.get('/:id',(req,res)=>{
 		let temp = require('./items/MehandiTouchUps');
 		response.items = temp.items
 		response.options = temp.options			
+	}else if(id == 'TouchUps'){
+		let temp = require('./items/touchUps');
+		response.items = temp.items
+		response.options = temp.options			
 	}else if(id == 'Skin'){
 		let temp = require('./items/SkinNailCare');
 		response.items = temp.items

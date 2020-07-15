@@ -23,7 +23,7 @@ router.get('/:date',(req,res)=>{
 	if(marrige[req.params.date]){
 		res.json({seats:marrige[req.params.date]})
 	}else {
-		res.json({seats:15})
+		res.json({seats:0})
 	}
 })
 
@@ -86,25 +86,22 @@ function saveUserDetails(data) {
 	})
 }
 
-function saveNotification(data) {
-	console.log('new booking');
-}
 
-// function saveNotification(data) {
-// 	console.log(data);
-// 	const notification = new BookingNotification({
-// 		amount:data.total,
-// 		fcmId:data.fcm_id,
-// 		orderId:data.orderId,
-// 		orderItems:data.orderItems,
-// 		bookingTime:data.selectedTime,
-// 		bookingDate:data.selectedDate,
-// 		customer_phoneNo:data.phNumber
-// 	}).save().then(()=>{
-// 		console.log('new booking')
-// 		sendNotificationToAdmin()
-// 	})
-// }
+function saveNotification(data) {
+	console.log(data);
+	const notification = new BookingNotification({
+		amount:data.total,
+		fcmId:data.fcm_id,
+		orderId:data.orderId,
+		orderItems:data.orderItems,
+		bookingTime:data.selectedTime,
+		bookingDate:data.selectedDate,
+		customer_phoneNo:data.phNumber
+	}).save().then(()=>{
+		console.log('new booking')
+		sendNotificationToAdmin()
+	})
+}
 
 // sendNotificationToAdmin()
 
