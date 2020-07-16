@@ -34,11 +34,15 @@ router.post('/',(req,res)=>{
 				res.json({status:false,reason:"Time Not Available"});
 			}else{
 				marrige[req.body.selectedDate]++;
+				saveUserDetails(req.body);
+				saveNotification(req.body);				
 				res.json({status:true,reason:"Time is Available"});
 			}
 		}else {
-			res.json({status:true,reason:"Time is Available"});
 			marrige[req.body.selectedDate] = 1;
+			saveUserDetails(req.body);
+			saveNotification(req.body);				
+			res.json({status:true,reason:"Time is Available"});
 		}
 		return;
 	}

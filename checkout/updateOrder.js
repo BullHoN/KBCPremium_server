@@ -1,10 +1,12 @@
 const express = require('express');
 const admin = require("firebase-admin");
 const OrderNotification = require('../models/OrderNotification')
+const User = require('../models/User')
 
 const router = express.Router();
 
-router.post('/',(req,res)=>{
+router.post('/:id',(req,res)=>{
+	changeOrderStatusInUser(req.params.id,req.body.status,req.body.orderId)
 	if(req.body.status == -1){
 		sendNotificationToUser(req.body.fcmId,req.body.orderId,req.body.status);
 		OrderNotification.findOneAndDelete({orderId:req.body.orderId}).then(()=>{
@@ -21,6 +23,22 @@ router.post('/',(req,res)=>{
 		})		
 	}
 })
+
+function changeOrderStatusInUser(phoneNo,status,orderId) {
+	User.findOne({phoneNo:phoneNo}).then((user)=>{
+		if(user){
+			let orderItems = user.orderItems;
+			for(let i=0;i<orderItems.length;i++){
+				if(orderItems[i].orderId == orderId){
+					orderItems[i].status = status;
+				}
+			}
+
+			user.orderItems = orderItems;
+			user.save()
+		}
+	})
+}
 
 function sendDeliveredNotificationToUser(fcmId,orderId,status) {
 	const message = {
@@ -46,7 +64,7 @@ function sendDeliveredNotificationToUser(fcmId,orderId,status) {
 function sendNotificationToUser(fcmId,orderId,status) {
 	const message = {
 		data:{
-			title:"Order Cancled",
+			title:"Order Canceled",
 			body:"Sorry To Inform You That Your Order has been Cancled",
 			orderId:orderId,
 			status:status+""			

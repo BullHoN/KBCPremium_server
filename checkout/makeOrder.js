@@ -12,6 +12,14 @@ router.post('/checkout',(req,res)=>{
 		if(user){
 			user.address = req.body.address;
 			user.nearByAddress = req.body.nearBy;
+
+			user.orderItems = [...user.orderItems,{
+				status:0,
+				total:req.body.total,
+				items:req.body.orderItems,
+				orderId:req.body.orderId
+			}]
+
 			user.save().then(()=>{
 				res.json({status:true});
 				saveNotification(req.body);

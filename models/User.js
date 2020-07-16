@@ -13,6 +13,18 @@ const userSchema = mongoose.Schema({
 		type:String,
 		default:"no nearby address"
 	},
+	orderItems:[{
+		status:Number,
+		total:Number,
+		date:{
+			type:String,
+			default:"Order in Processing"
+		},
+		items:[{
+			type:String
+		}],
+		orderId:String
+	}],
 	pincode:{
 		type:String,
 	},
