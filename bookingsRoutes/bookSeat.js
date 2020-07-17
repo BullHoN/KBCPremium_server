@@ -92,7 +92,7 @@ function saveUserDetails(data) {
 
 
 function saveNotification(data) {
-	console.log(data);
+	// console.log(data);
 	const notification = new BookingNotification({
 		amount:data.total,
 		fcmId:data.fcm_id,

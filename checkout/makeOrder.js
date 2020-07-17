@@ -7,7 +7,6 @@ const router = express.Router();
 
 
 router.post('/checkout',(req,res)=>{
-	// console.log(req.body)
 	User.findOne({phoneNo:req.body.phNumber}).then((user)=>{
 		if(user){
 			user.address = req.body.address;
@@ -42,7 +41,7 @@ function saveNotification(data) {
 		isPaid: data.isPaid
 	}).save().then(()=>{
 		console.log('new order saved');
-		sendNotificationToAdmin();
+		// sendNotificationToAdmin();
 	})
 }
 
