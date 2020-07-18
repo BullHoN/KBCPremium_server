@@ -6,9 +6,9 @@ const User = require('../models/User')
 const router = express.Router();
 
 router.post('/:id',(req,res)=>{
-	changeOrderStatusInUser(req.params.id,req.body.status,req.body.orderId)
+	changeOrderStatusInUser(req.params.id,req.body.status,req.body.orderId,req.body.message)
 	if(req.body.status == -1){
-		sendNotificationToUser(req.body.fcmId,req.body.orderId,req.body.status);
+		sendNotificationToUser(req.body.fcmId,req.body.orderId,req.body.status,req.body.message);
 		OrderNotification.findOneAndDelete({orderId:req.body.orderId}).then(()=>{
 			res.json({status:true});
 		})
@@ -24,13 +24,16 @@ router.post('/:id',(req,res)=>{
 	}
 })
 
-function changeOrderStatusInUser(phoneNo,status,orderId) {
+function changeOrderStatusInUser(phoneNo,status,orderId,message) {
 	User.findOne({phoneNo:phoneNo}).then((user)=>{
 		if(user){
 			let orderItems = user.orderItems;
 			for(let i=0;i<orderItems.length;i++){
 				if(orderItems[i].orderId == orderId){
 					orderItems[i].status = status;
+					if(message){
+						orderItems[i].date = message;
+					}
 				}
 			}
 
@@ -61,13 +64,14 @@ function sendDeliveredNotificationToUser(fcmId,orderId,status) {
 
 }
 
-function sendNotificationToUser(fcmId,orderId,status) {
+function sendNotificationToUser(fcmId,orderId,status,msg) {
 	const message = {
 		data:{
 			title:"Order Canceled",
-			body:"Sorry To Inform You That Your Order has been Cancled",
+			body:"Sorry To Inform You That Your Order has been Canceled",
 			orderId:orderId,
-			status:status+""			
+			status:status+"",
+			message:msg			
 		},
 		token:fcmId
 	}
