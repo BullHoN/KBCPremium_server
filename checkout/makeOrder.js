@@ -41,7 +41,7 @@ function saveNotification(data) {
 		isPaid: data.isPaid
 	}).save().then(()=>{
 		console.log('new order saved');
-		// sendNotificationToAdmin();
+		sendNotificationToAdmin();
 	})
 }
 

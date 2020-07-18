@@ -19,6 +19,15 @@ let marrige = require('./marrige.json')
 // 	"15 July 2020":2
 // }
 
+let bookingOpen = false;
+
+router.get('/status/:id',(req,res)=>{
+	if(req.params.id == 'true'){
+		bookingOpen = !bookingOpen;
+	}
+	res.json({isOpen:bookingOpen})
+})
+
 router.get('/:date',(req,res)=>{
 	if(marrige[req.params.date]){
 		res.json({seats:marrige[req.params.date]})
@@ -28,6 +37,13 @@ router.get('/:date',(req,res)=>{
 })
 
 router.post('/',(req,res)=>{
+
+	if(!bookingOpen){
+		res.json({status:false,reason:"Sorry, we are not taking any booking right now"});
+		return;
+	}
+
+
 	if(req.body.bookingCat == "Make-Up\n(Bridal,Party)"){
 		if(marrige[req.body.selectedDate]){
 			if(marrige[req.body.selectedDate] == 15){
