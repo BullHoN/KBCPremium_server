@@ -6,7 +6,11 @@ const User = require('../models/User')
 const router = express.Router();
 
 router.post('/:id',(req,res)=>{
-	changeOrderStatusInUser(req.params.id,req.body.status,req.body.orderId,req.body.message)
+	if(req.body.message){
+		changeOrderStatusInUser(req.params.id,req.body.status,req.body.orderId,req.body.message)
+	}else {
+		changeOrderStatusInUser(req.params.id,req.body.status,req.body.orderId,null)
+	}
 	if(req.body.status == -1){
 		sendNotificationToUser(req.body.fcmId,req.body.orderId,req.body.status,req.body.message);
 		OrderNotification.findOneAndDelete({orderId:req.body.orderId}).then(()=>{
