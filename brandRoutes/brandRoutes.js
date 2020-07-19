@@ -3,6 +3,8 @@ const ProdcutItem = require('../models/ProductItem');
 const lotusItems = require('./LotusProfessional');
 const skeyndorItems = require('./Skeyndor');
 const lorelItems = require('./LorelProfessional');
+const matrixItems = require('./matrix')
+const cherlysItems = require('./cherlys')
 
 const router = express.Router();
 
@@ -19,6 +21,14 @@ router.get('/:id',(req,res)=>{
 	}else if(id == 'Lotus Professional'){
 		getAllItems(start,offset,lotusItems).then((items)=>{
 			res.json(items);
+		})
+	}else if(id == 'Matrix'){
+		getSubCategories(start,offset,matrixItems).then((items)=>{
+			res.json(items)
+		})
+	}else if(id == 'Cherlys'){
+		getSubCategories(start,offset,cherlysItems).then((items)=>{
+			res.json(items)
 		})
 	}else {
 		getAllItems(start,offset,lorelItems).then((items)=>{

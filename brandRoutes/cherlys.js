@@ -1,0 +1,42 @@
+let subCategories = [
+	{
+		brandName:"Cleanser",
+		items:[
+				"5f142168a2490eb72a25d4cf",
+				"5f142341a2490eb72a4cf25e",
+				"5f1423c1a2490eb72a4cf25f",
+				"5f142440a2490eb72a4cf260",
+				"5f14248ca2490eb72a4cf261",
+				"5f1424d3a2490eb72a4cf262"		
+		]
+	},
+	{
+		brandName:"Moisturiser",
+		items:[
+			      "5f142589a2490eb72a4cf263",
+			      "5f1425efa2490eb72a4cf264",
+			      "5f14264ea2490eb72a4cf265",
+			      "5f1426a7a2490eb72a4cf266",
+			      "5f1426f4a2490eb72a4cf267"
+               ]
+	},
+	{
+		brandName:"Repair",
+		items:[
+			       "5f14276ca2490eb72a4cf268",
+			       "5f1427a0a2490eb72a4cf269",
+			       "5f1427e1a2490eb72a4cf26a",
+			       "5f14281aa2490eb72a4cf26b",
+			       "5f14284ba2490eb72a4cf26c"
+		]
+	},	
+	{
+		brandName:"Sunblock",
+		items:[
+			      "5f1428b2a2490eb72a4cf26d",
+			      "5f1428f2a2490eb72a4cf26e"
+		]
+	}	
+]
+
+module.exports = subCategories;
