@@ -14,12 +14,17 @@ let marrige = require('./marrige.json')
 // 	}
 // }
 
+// {
+// 	"21 July 2020":{
+// 		"5:00":1
+// 	}
+// }
 
 // {
 // 	"15 July 2020":2
 // }
 
-let bookingOpen = false;
+let bookingOpen = true;
 
 router.get('/status/:id',(req,res)=>{
 	if(req.params.id == 'true'){
@@ -27,7 +32,7 @@ router.get('/status/:id',(req,res)=>{
 	}
 	res.json({isOpen:bookingOpen})
 })
-
+ 
 router.get('/:date',(req,res)=>{
 	if(marrige[req.params.date]){
 		res.json({seats:marrige[req.params.date]})
@@ -63,34 +68,25 @@ router.post('/',(req,res)=>{
 		return;
 	}
 
-	if(seats[req.body.selectedDate]){
-		if(seats[req.body.selectedDate][req.body.bookingCat]){
-			if(seats[req.body.selectedDate][req.body.bookingCat][req.body.selectedTime]){
-				if(seats[req.body.selectedDate][req.body.bookingCat][req.body.selectedTime] == 5){
+	if(seats[req.body.selectedDate]){ 
+			if(seats[req.body.selectedDate][req.body.selectedTime]){
+				if(seats[req.body.selectedDate][req.body.selectedTime] == 5){
 					res.json({status:false,reason:"Time Not Available"});
 				}else {
-					seats[req.body.selectedDate][req.body.bookingCat][req.body.selectedTime]++;
+					seats[req.body.selectedDate][req.body.selectedTime]++;
 					saveUserDetails(req.body);
 					saveNotification(req.body);
 					res.json({status:true,reason:"Time is Available"});
 				}
 			}else {
-				seats[req.body.selectedDate][req.body.bookingCat][req.body.selectedTime] = 1;
+				seats[req.body.selectedDate][req.body.selectedTime] = 1;
 				saveUserDetails(req.body);
 				saveNotification(req.body);			
 				res.json({status:true,reason:"Time is Available"});	
 			}
-		}else {
-			seats[req.body.selectedDate][req.body.bookingCat] = {};
-			seats[req.body.selectedDate][req.body.bookingCat][req.body.selectedTime] = 1;
-			saveUserDetails(req.body);
-			saveNotification(req.body);				
-			res.json({status:true,reason:"Time is Available"});
-		}
 	}else {
 		seats[req.body.selectedDate] = {};
-		seats[req.body.selectedDate][req.body.bookingCat] = {};
-		seats[req.body.selectedDate][req.body.bookingCat][req.body.selectedTime] = 1;
+		seats[req.body.selectedDate][req.body.selectedTime] = 1;
 
 		saveUserDetails(req.body);
 		saveNotification(req.body);			
