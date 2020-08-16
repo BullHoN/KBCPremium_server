@@ -6,7 +6,9 @@ const router = express.Router();
 
 router.post('/',(req,res)=>{
 	sendNotificationToUser(req.body.fcmId,req.body.orderId);
-	BookingNotification.findOneAndDelete({orderId:req.body.orderId}).then(()=>{
+	BookingNotification.findOne({orderId:req.body.orderId}).then((order)=>{
+		order.completed = true;
+		order.save();
 		res.json({status:true});
 	})
 })

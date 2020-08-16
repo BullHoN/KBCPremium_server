@@ -4,7 +4,8 @@ const User = require('../models/User')
 const router = express.Router();
 
 router.get('/appointments',(req,res)=>{
-	BookingNotification.find({}).then((items)=>{
+	// console.log(req.query);
+	BookingNotification.find({completed: req.query.completed}).then((items)=>{
 		getCustomerDetails(items).then((data)=>{
 			res.json(data);
 		})
