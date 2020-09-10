@@ -2,6 +2,7 @@ const express = require('express');
 const mongoose = require('mongoose');
 const cors = require('cors');
 const app = express();
+const specials = require('./specials.js')
 
 
 mongoose.connect('mongodb+srv://admin:DLI9RTUpCfzwEq4V@kbcpremium-ojipm.mongodb.net/test?retryWrites=true&w=majority',{useNewUrlParser:true,useUnifiedTopology: true})
@@ -18,49 +19,18 @@ admin.initializeApp({
   databaseURL: "https://kbcpremium-64888.firebaseio.com"
 });
 
-
-	// const message = {
-	// 	data:{
-	// 		title:"New Order arrived",
-	// 		body:"Hurry up new order from up63cafe"			
-	// 	},
-	// 	token:"dZBAUHsdnXA:APA91bFnLz1RX4m0prEGBL_GZRQZdOnm03qo1fH1nfFHyx1_4qyJpqD7qK19KO3YN95soDG8Frcwj51_Hz1IUIQHOCX-CXjpnj0DIL25rtmXqraWD6rhlngb1uEa29otACPQdrR0E1bq"
-	// }
-
-	// admin.messaging().send(message)
-	//   .then((response) => {
-	//     console.log('Successfully sent message to ' + "user", response);
-	//   })
-	//   .catch((error) => {
-	//     console.log('Error sending message to' + "user", error);
-	//   });	
-
-// const fs = require('fs');
-// const ProductItem = require('./models/ProductItem');
-// ProductItem.find({}).then((products)=>{
-// 	products.forEach((product)=>{
-// 		product.imageUrl =  product.imageUrl.replace("192.168.225.20","18.188.149.40");
-// 		product.save();
-// 	})
-// })
-
-// fs.readFile('imp.txt','utf8',(err,file)=>{
-// 	products = file.split(',');
-// 	for(let i=55;i<61;i++){
-// 		let product = products[i].split('=');
-// 		let name = product[0].split('\n')[1];
-// 		let price = product[1];
-// 		let name2 = name.replace('&','and')
-// 		let imageUrl = `http://192.168.225.20:5000/images/Skeyndor/${name2}.png`;
-
-// 		let productItem = new ProductItem({
-// 			name:name,
-// 			imageUrl:imageUrl,
-// 			price:price
-// 		}).save().then((pd)=>{
-// 			console.log(pd._id);
+// testing
+// const ProductItem = require('./models/ProductItem')
+// const skendorItems = require('./brandRoutes/Skeyndor')
+// skendorItems.forEach((skyItem,index)=>{
+// 	skyItem['items'].forEach((someItems)=>{
+// 		ProductItem.findOne({_id:someItems}).then((item)=>{
+// 			item.discount = 5;
+// 			item.save().then(()=>{
+// 				console.log('saved',index);
+// 			})
 // 		})
-// 	}
+// 	})
 // })
 
 
@@ -83,6 +53,12 @@ app.use('/updateBooking',require('./bookingsRoutes/updateBookingItem'))
 app.use('/updateOrder',require('./checkout/updateOrder'))
 app.use('/admin',require('./admin/getAppointments'))
 app.use('/otp',require('./authRoutes/optverification'))
+
+
+
+app.get('/specials',(req,res)=>{
+	res.json(specials)
+})
 
 
 app.listen(5000,()=>{

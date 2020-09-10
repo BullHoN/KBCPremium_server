@@ -20,6 +20,7 @@ router.get('/getOrders',(req,res)=>{
 	}else if(req.query.itemDelivered == 'true'){
 		OrderNotification.find({itemDelivered:true}).sort({createdAt:'descending'}).then((items)=>{
 			getCustomerDetails(items).then((data)=>{
+				console.log(data);
 				res.json(data);
 			})
 		})		
