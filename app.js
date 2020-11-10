@@ -5,7 +5,7 @@ const app = express();
 const specials = require('./specials.js')
 
 
-mongoose.connect('mongodb+srv://admin:DLI9RTUpCfzwEq4V@kbcpremium-ojipm.mongodb.net/test?retryWrites=true&w=majority',{useNewUrlParser:true,useUnifiedTopology: true})
+mongoose.connect('',{useNewUrlParser:true,useUnifiedTopology: true})
 .then(()=>console.log('conncted to mongodb'))
 .catch((err)=>console.log(err));
 
